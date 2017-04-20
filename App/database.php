@@ -23,7 +23,7 @@ class Database extends Config {
      */
     private function arrayBinder(&$query, $vars){
         foreach ($vars as $key => $value) {
-            $query->bindValue(':'.$key, $value);
+            $query->bindValue(':'.$key, htmlspecialchars($value));
         }
     }
     

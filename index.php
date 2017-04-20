@@ -1,12 +1,26 @@
 <?php
+
+if(isset($_POST['desc'])){
+    unset($_COOKIE['order']);
+    setcookie('order', null, -1);
+    header('location: index.php');
+} 
+if(isset($_POST['asc'])){
+    setcookie('order', 'asc', time() + 86400 * 30);
+    header('location: index.php');
+} 
+
 require_once('App/app.php');
 include_once('Modules/head.php');
+
 ?>
 
 <main>
     <h1>Home</h1>
-    <a href="index.php">Order by most popular</a>
-    <a href="index.php?asc">Order by least popular</a>
+    <form method="post">
+        <input type="submit" name="desc" value="Order by most popular">
+        <input type="submit" name="asc" value="Order by least popular">
+    </form>
     
     <form method="post">
         <div class="form-element">
