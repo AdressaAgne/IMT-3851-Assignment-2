@@ -20,9 +20,8 @@ require_once('App/app.php');
     <main>
         
         <?php 
-            foreach ($posts->fetchAll() as $post) {
-                include('Modules/'.$post['style'].'.php');
-            }
+            $post = $posts->fetch($_GET['id']);
+            include('Modules/'.$post['style'].'.php');
         ?>
         
     </main>

@@ -11,10 +11,10 @@ require_once('config.php');
 require_once('database.php');
 
 require_once('auth.php');
+$auth = new Auth();
 
 require_once('posts.php');
-
-$auth = new Auth();
+$posts = new Posts();
 
 if(isset($_GET['logout'])){
     $auth->logout();

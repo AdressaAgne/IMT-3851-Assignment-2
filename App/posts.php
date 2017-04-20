@@ -6,13 +6,18 @@ class Posts extends Database{
         return $this->query('SELECT * FROM posts')->fetchAll();
     }
     
+    public function fetch($id){
+        return $this->query('SELECT * FROM posts WHERE id = :id', [
+            'id' => $id,
+        ])->fetch();
+    }
     
     public function add($title, $content, $image, $style){
         
         return $this->query('INSERT INTO posts (title, content, image_id, time, user_id, style) VALUES (:title, :content, :image_id, :time, :user_id, :style)', [
             'title'     => $title,
             'contnt'    => $content,
-            'image_id'  => $image->get_id(),
+            'image_id'  => $image,
             'time'      => time(),
             'user_id'   => $auth->user_id(),
             'style'     => $style,
@@ -26,7 +31,7 @@ class Posts extends Database{
             'id'        => $id,
             'title'     => $title,
             'contnt'    => $content,
-            'image_id'  => $image->get_id(),
+            'image_id'  => $image,
             'style'     => $style,
         ]);
         
@@ -36,9 +41,6 @@ class Posts extends Database{
 
         return $this->query('DELETE FROM posts WHERE id = :id', [
             'id' => $id,
-        ]);
-        
+        ]);    
     }
-    
-    
 }
