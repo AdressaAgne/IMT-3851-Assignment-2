@@ -1,6 +1,6 @@
 <article class="post">
-    <?php if($post['user_id'] == $_SESSION['user']['id']){ ?>
-        <a href="editPost.php">edit</a>
+    <?php if($auth->isLoggedIn() && $post['user_id'] == $_SESSION['user']['id']){ ?>
+        <small><a href="editPost.php">edit</a></small>
     <?php } ?>
     
     <h1><a href="post.php?id=<?= $post['id'] ?>"><?= $post['title'] ?></a></h1>

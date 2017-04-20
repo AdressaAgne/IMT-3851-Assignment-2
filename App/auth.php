@@ -57,13 +57,14 @@ class Auth extends Database{
     
     public function redirectIfLoggedIn(){
         if($this->isLoggedIn()){
-            header('location: /index.php');
+            if(isset($_GET['page'])) die(header('location: '.$_GET['page']));
+            header('location: index.php');    
         }
     }
     
     public function requireAuth(){
         if(!$this->isLoggedIn()){
-            header('location: /login.php');
+            header('location: login.php?page='.trim($_SERVER['PHP_SELF'], '/'));
         }
     }
     

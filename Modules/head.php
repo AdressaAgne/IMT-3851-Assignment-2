@@ -12,7 +12,7 @@
     <div class="container">
         <ul>
             <li><a href="index.php">Home</a></li>
-            <li><a href="addPost.php">Add Post</a></li>
+            <li><a href="addpost.php">Add Post</a></li>
             <?php if($auth->isLoggedIn()){ ?>
                 <li>You are logged in as <?= $_SESSION['user']['name'] ?> <?= $_SESSION['user']['surname'] ?></li>
                 <li><a href="?logout">Logout</a></li>

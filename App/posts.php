@@ -13,13 +13,13 @@ class Posts extends Database{
     }
     
     public function add($title, $content, $image, $style){
-        
+        $auth = new Auth();
         return $this->query('INSERT INTO posts (title, content, image_id, time, user_id, style) VALUES (:title, :content, :image_id, :time, :user_id, :style)', [
             'title'     => $title,
             'contnt'    => $content,
             'image_id'  => $image,
             'time'      => time(),
-            'user_id'   => $auth->user_id(),
+            'user_id'   => $auth->get_id(),
             'style'     => $style,
         ]);
         
