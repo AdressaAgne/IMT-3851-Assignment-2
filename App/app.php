@@ -4,6 +4,20 @@ if(!isset($_SESSION)){
     session_start();
 }
 
+/**
+ * Die and Dump
+ * @param  [type] $args [description]
+ * @return [type]       [description]
+ */
+function dd(...$args){
+    die(print_r([$args]));
+}
+
+function redirect($page){
+    header('location: '.$page);
+}
+
+
 // Inclues the config file
 require_once('config.php');
 

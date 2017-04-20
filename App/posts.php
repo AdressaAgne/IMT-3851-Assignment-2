@@ -16,13 +16,12 @@ class Posts extends Database{
         $auth = new Auth();
         return $this->query('INSERT INTO posts (title, content, image_id, time, user_id, style) VALUES (:title, :content, :image_id, :time, :user_id, :style)', [
             'title'     => $title,
-            'contnt'    => $content,
+            'content'   => $content,
             'image_id'  => $image,
-            'time'      => time(),
+            'time'      => date('Y-m-d', time()),
             'user_id'   => $auth->get_id(),
             'style'     => $style,
         ]);
-        
     }
     
     public function edit($id, $title, $content, $image, $style){
@@ -30,7 +29,7 @@ class Posts extends Database{
         return $this->query('UPDATE posts SET title = :title, content = :content, image_id = :image_id, style = :style WHERE id = :id', [
             'id'        => $id,
             'title'     => $title,
-            'contnt'    => $content,
+            'content'   => $content,
             'image_id'  => $image,
             'style'     => $style,
         ]);
