@@ -3,12 +3,17 @@
 class Posts extends Database{
     
     public function fetchAll(){
-        return $this->query('SELECT p.*, r.rating FROM posts AS p 
-            LEFT JOIN ratings AS r ON r.post_id = p.id')->fetchAll();
+        return $this->query('SELECT p.*, r.rating, AVG(r.rating) AS average, SUM(r.rating = 1) AS up, (SUM(r.rating = 1) * AVG(r.rating)) AS rating 
+            FROM posts AS p 
+            LEFT JOIN ratings AS r ON r.post_id = p.id
+            GROUP BY p.id
+            ORDER BY rating DESC
+            ')->fetchAll();
     }
     
     public function fetch($id){
-        return $this->query('SELECT p.*, r.rating FROM posts AS p 
+        return $this->query('SELECT p.*, r.rating, AVG(r.rating) AS average, SUM(r.rating = 1) AS up, (SUM(r.rating = 1) * AVG(r.rating)) AS rating 
+            FROM posts AS p 
             LEFT JOIN ratings AS r ON r.post_id = p.id 
             WHERE p.id = :id', [
             'id' => $id,
