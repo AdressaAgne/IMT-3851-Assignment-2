@@ -43,6 +43,8 @@ class Auth extends Database{
             'mail'     => $mail,
             'pw'       => password_hash($pw1, PASSWORD_BCRYPT),
         ]);
+        
+        return true;
     }
     
     public function logout(){

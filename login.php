@@ -22,6 +22,7 @@ include_once('Modules/head.php');
         </form>
         
         <h1>Register:</h1>
+        <?php if(isset($reg)) echo $reg; ?>
         <form method="post">
             <div class="form-element">
                 <label>Name:

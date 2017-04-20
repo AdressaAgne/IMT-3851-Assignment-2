@@ -3,12 +3,26 @@
 class Posts extends Database{
     
     public function fetchAll(){
-        return $this->query('SELECT p.*, r.rating, AVG(r.rating) AS average, SUM(r.rating = 1) AS up, (SUM(r.rating = 1) * AVG(r.rating)) AS rating 
-            FROM posts AS p 
-            LEFT JOIN ratings AS r ON r.post_id = p.id
-            GROUP BY p.id
-            ORDER BY rating DESC
-            ')->fetchAll();
+        
+        if(isset($_POST['search'])){
+            
+            return $this->query('SELECT p.*, r.rating, AVG(r.rating) AS average, SUM(r.rating = 1) AS up, (SUM(r.rating = 1) * AVG(r.rating)) AS rating 
+                FROM posts AS p 
+                LEFT JOIN ratings AS r ON r.post_id = p.id
+                WHERE p.title LIKE :search OR p.content LIKE :search
+                GROUP BY p.id
+                ORDER BY rating '.(isset($_GET['asc']) ? '' : 'DESC').'
+                ', [
+                    'search' => '%'.$_POST['search'].'%',
+                    ])->fetchAll();
+        } else {
+            return $this->query('SELECT p.*, r.rating, AVG(r.rating) AS average, SUM(r.rating = 1) AS up, (SUM(r.rating = 1) * AVG(r.rating)) AS rating 
+                FROM posts AS p 
+                LEFT JOIN ratings AS r ON r.post_id = p.id
+                GROUP BY p.id
+                ORDER BY rating '.(isset($_GET['asc']) ? '' : 'DESC').'
+                ')->fetchAll();
+        }    
     }
     
     public function fetch($id){

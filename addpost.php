@@ -1,6 +1,8 @@
 <?php
 require_once('App/app.php');
 require_once('controllers/addpost.php');
+
+$title = 'Add Post';
 include_once('Modules/head.php');
 ?>
     <main>
