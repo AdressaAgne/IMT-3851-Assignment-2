@@ -66,7 +66,9 @@ class Auth extends Database{
     
     public function requireAuth(){
         if(!$this->isLoggedIn()){
-            redirect('login.php?page='.trim($_SERVER['PHP_SELF'], '/'));
+            $page = explode('/', trim($_SERVER['PHP_SELF'], '/'));
+            $page = $page[count($page)];
+            redirect('login.php?page='.$page);
         }
     }
     

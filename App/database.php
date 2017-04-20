@@ -27,6 +27,7 @@ class Database extends Config {
         }
     }
     
+    
     /**
      * Do a sql query with args
      * @param  [string] $sql  [SQL string]
