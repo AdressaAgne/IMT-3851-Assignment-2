@@ -1,0 +1,20 @@
+* {
+    padding: 0px;
+    margin: 0px;
+}
+
+p, h1, h2, h3 {
+    padding: 10px;
+}
+
+ul li{
+    padding-left: 10px;
+    display: inline-block;
+}
+
+main, .container {
+    margin: 0 auto;
+    padding: 20px;
+    width: 960px;
+}
+
