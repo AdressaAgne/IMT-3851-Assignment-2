@@ -120,6 +120,10 @@ ALTER TABLE `posts`
 --
 ALTER TABLE `ratings`
   ADD PRIMARY KEY (`id`);
+  
+ALTER TABLE `ratings`
+  ADD CONSTRAINT ratings_user_post
+     UNIQUE (post_id, user_id) ;
 
 --
 -- Indexes for table `Users`

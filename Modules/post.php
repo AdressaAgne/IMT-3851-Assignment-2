@@ -8,16 +8,6 @@
     <h1><a href="post.php?id=<?= $post['id'] ?>"><?= $post['title'] ?></a></h1>
     <p><?= $post['content'] ?></p>
     
-    <?php 
-    if ($post['rating'] == '') {
-        echo 'You have not rated';
-    } elseif ($post['rating'] == 1) {
-        echo 'You rated up';
-    } else {
-        echo 'You rated down';
-    } 
-    ?>
-    
     <p><strong>Votes: <?= $post['up'] ?> (<?= $post['average'] * 100 ?>%)</strong></p>
     
     <a href="vote.php?vote=0&post=<?= $post['id'] ?>&page=<?= $_SERVER['PHP_SELF'] ?>" class="down">Thumbs Down</a>

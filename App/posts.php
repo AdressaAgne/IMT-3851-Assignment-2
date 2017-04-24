@@ -67,29 +67,24 @@ class Posts extends Database{
     public function vote($id, $vote){
         $auth = new Auth();
         if(!$auth->isLoggedIn()) return;
-        
-        $rating = $this->query('SELECT * FROM ratings WHERE post_id = :post_id AND user_id = :user_id',[
+        // INSERT row, if it exists update it
+        // UPDATE: if current rating = the same as new rating then set rating to 2
+        // DELETE all ratings that are set to 2
+        $this->query('INSERT INTO ratings (user_id, post_id, rating) 
+                        VALUES(:user_id, :post_id, :rating) 
+                            ON DUPLICATE KEY
+                                UPDATE rating = 
+                                    CASE WHEN rating = :rating THEN 
+                                        2
+                                    ELSE 
+                                        :rating
+                                    END;
+
+                    DELETE FROM ratings WHERE rating = 2;
+            ', [
+            'rating' => $vote,
             'post_id' => $id,
             'user_id' => $auth->get_id(),
         ]);
-        if($rating->rowCount() > 0){
-            $rating = $rating->fetch();
-            if($vote == $rating['rating']){
-                $this->query('DELETE FROM ratings WHERE id = :id', [
-                    'id' => $rating['id'],
-                ]);
-            } else {
-                $this->query('UPDATE ratings SET rating = :vote WHERE id = :id', [
-                    'vote' => !$rating['rating'],
-                    'id' => $rating['id'],
-                ]);
-            }
-        } else {
-            $this->query('INSERT INTO ratings (user_id, post_id, rating) VALUES(:user_id, :post_id, :rating)', [
-                'rating' => $vote,
-                'post_id' => $id,
-                'user_id' => $auth->get_id(),
-            ]);
-        }
     }
 }
