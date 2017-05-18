@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.5.2
+-- version 4.7.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 20, 2017 at 07:00 PM
--- Server version: 5.6.34
--- PHP Version: 7.1.0
+-- Generation Time: May 18, 2017 at 09:06 PM
+-- Server version: 5.6.35
+-- PHP Version: 7.1.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -13,6 +13,25 @@ SET time_zone = "+00:00";
 --
 -- Database: `oblig2`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `categories`
+--
+
+CREATE TABLE `categories` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`id`, `name`) VALUES
+(1, 'Nature'),
+(2, 'News');
 
 -- --------------------------------------------------------
 
@@ -48,8 +67,29 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`id`, `user_id`, `title`, `content`, `image_id`, `style`, `time`) VALUES
-(1, 6, 'Title yaya', 'lorem ipsum dolor sit amet, lorem ipsum dolor sit amet\r\nlorem ipsum dolor sit ametvv\r\nvlorem ipsum dolor sit ametv lorem ipsum dolor sit amet v v v vlorem ipsum dolor sit amet', 1, 'post', '0000-00-00'),
-(2, 0, 'This is a post', 'this is very awesome LOL!', 0, 'post', '0000-00-00');
+(3, 1, 'This is a news article!', 'yaay this is news', 0, 'post', '2017-05-18'),
+(4, 1, '17. Mai hangover er en ting', 'ikke ambefalt!', 0, 'post', '2017-05-18');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `posts_categories`
+--
+
+CREATE TABLE `posts_categories` (
+  `id` int(11) NOT NULL,
+  `post_id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `posts_categories`
+--
+
+INSERT INTO `posts_categories` (`id`, `post_id`, `category_id`) VALUES
+(1, 3, 2),
+(2, 4, 1),
+(3, 4, 2);
 
 -- --------------------------------------------------------
 
@@ -75,7 +115,7 @@ INSERT INTO `ratings` (`id`, `user_id`, `post_id`, `rating`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
@@ -88,39 +128,22 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `Users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `surname`, `mail`, `password`, `rank`) VALUES
-(1, 'Agne', 'Odegaard', 'agne240@me.com', '$2y$10$3ZHIG9vJriUolldUh1l4Y.KVIsuVebaIeTUcT5agbYy0GdYFn7TPO', '2');
+(1, 'Agne', 'Odegaard', 'agne240@me.com', '$2y$10$3ZHIG9vJriUolldUh1l4Y.KVIsuVebaIeTUcT5agbYy0GdYFn7TPO', 2),
+(2, 'Pål', 'Nordmann', 'paal@nordmann.no', '$2y$10$ZiGURQUvZF0PqaNJJ7Q85ewTso94eH0Xdz0EgHPbWfzc6SlE4OHqG', 1);
 
 --
 -- Indexes for dumped tables
 --
 
-CREATE TABLE `categories` (
-    `id` int(11) NOT NULL,
-    `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-INSERT INTO `categories` (`id`, `name`) VALUES
-(1, 'Nature'),
-(2, 'News');
-
-
-CREATE TABLE `posts_categories` (
-  `id` int(11) NOT NULL,
-  `post_id` int(11) NOT NULL,
-  `category_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
+--
+-- Indexes for table `categories`
+--
 ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
-  
-ALTER TABLE `posts_categories`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `pivot_cats` (`category_id`),
-  ADD KEY `pivot_posts` (`post_id`);
 
 --
 -- Indexes for table `images`
@@ -135,44 +158,67 @@ ALTER TABLE `posts`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `posts_categories`
+--
+ALTER TABLE `posts_categories`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `pivot_cats` (`category_id`),
+  ADD KEY `pivot_posts` (`post_id`);
+
+--
 -- Indexes for table `ratings`
 --
 ALTER TABLE `ratings`
-  ADD PRIMARY KEY (`id`);
-  
-  
-ALTER TABLE `ratings`
-  ADD CONSTRAINT ratings_user_post
-     UNIQUE (post_id, user_id);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `ratings_user_post` (`post_id`,`user_id`);
 
 --
--- Indexes for table `Users`
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
+--
+-- AUTO_INCREMENT for dumped tables
+--
 
-
-ALTER TABLE `images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
-
-ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
-
-ALTER TABLE `ratings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
-
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
-  
+--
+-- AUTO_INCREMENT for table `categories`
+--
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;  
-  
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `images`
+--
+ALTER TABLE `images`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `posts`
+--
+ALTER TABLE `posts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `posts_categories`
+--
 ALTER TABLE `posts_categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
-  
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `ratings`
+--
+ALTER TABLE `ratings`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- Constraints for dumped tables
+--
 
-  
+--
+-- Constraints for table `posts_categories`
+--
 ALTER TABLE `posts_categories`
   ADD CONSTRAINT `pivot_cats` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `pivot_posts` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
