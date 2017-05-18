@@ -13,12 +13,15 @@
         <ul>
             <li><a href="index.php">Home</a></li>
             <li><a href="addpost.php">Add Post</a></li>
-            <?php if($auth->isLoggedIn()){ ?>
-                <li>You are logged in as <?= $_SESSION['user']['name'] ?> <?= $_SESSION['user']['surname'] ?></li>
+            <?php if($auth->isLoggedIn()) : ?>
+                <?php if($auth->rank() > 1) : ?>
+                <li><a href="admin.php">Admin</a></li>
+                <?php endif; ?>
+                <li><a href="profile.php">You are logged in as <?= $auth->user['name'] ?> <?= $auth->user['surname'] ?></a></li>
                 <li><a href="?logout">Logout</a></li>
-            <?php }  else { ?>
+            <?php else : ?>
                 <li><a href="login.php">Login</a></li>
-            <?php } ?>
+            <?php endif; ?>
         </ul>
     </div>
 </nav>

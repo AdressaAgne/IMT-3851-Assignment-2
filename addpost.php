@@ -31,10 +31,23 @@ include_once('Modules/head.php');
                 <label>Content:</label>
                 <textarea name="content" rows="8" cols="80"></textarea>
             </div>
+            
+            <div class="form-element">
+                <label>Categories:</label>
+                <ul>
+                <?php foreach ($cats->fetchAll() as $key => $value) { ?>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="categories[]" value="<?= $value['id'] ?>"><?=$value['name']?>
+                            </label>
+                        </li>
+                <?php } ?>
+                </ul>
+            </div>
+            
             <div class="form-element">
                 <input type="submit" name="addpost" value="Post">
             </div>
-            
             
         </form>
         

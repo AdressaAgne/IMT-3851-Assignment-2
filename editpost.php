@@ -30,6 +30,25 @@ include_once('Modules/head.php');
                 <label>Content:</label>
                 <textarea name="content" rows="8" cols="80"><?= $post['content'] ?></textarea>
             </div>
+            
+            <div class="form-element">
+                <label>Categories:</label>
+                <ul>
+                <?php foreach ($cats->fetchAll() as $key => $value) { ?>
+                    
+                    <?php if (in_array($value['name'], $post['categories'])) : ?>
+                        <li><label>
+                            <input type="checkbox" name="categories[]" value="<?= $value['id'] ?>" checked=""><?=$value['name']?>
+                        </label></li>
+                    <?php else : ?>
+                        <li><label>
+                            <input type="checkbox" name="categories[]" value="<?= $value['id'] ?>"><?=$value['name']?>
+                        </label></li>
+                    <?php endif; ?>
+                <?php } ?>
+                </ul>
+            </div>
+            
             <div class="form-element">
                 <input type="submit" name="editpost" value="Edit Post">
             </div>

@@ -78,30 +78,49 @@ INSERT INTO `ratings` (`id`, `user_id`, `post_id`, `rating`) VALUES
 -- Table structure for table `Users`
 --
 
-CREATE TABLE `Users` (
+CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `surname` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `mail` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
-  `token` varchar(60) COLLATE utf8_unicode_ci NOT NULL
+  `rank` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `Users`
 --
 
-INSERT INTO `Users` (`id`, `name`, `surname`, `mail`, `password`, `token`) VALUES
-(1, 'agne', 'ødegaard', 'mail@mail.mail', '123123', '123li2yewutyfjv'),
-(2, 'navn', 'etternavn', 'mail', 'pw', 'token'),
-(3, 'halla', 'ball', 'mail@mail.no', '$2y$10$XcLHYq68kzE81gV0yqPho.6l89wutJeIXkqAINnKUNEbs1uttE.X6', ''),
-(4, '123', '123', '123', '$2y$10$w7VcqM.joe8Gre4WAGQfc.iZPC2FcCJ0bekeeLHEpYb0X30.frbhe', ''),
-(5, 'hei', 'asd', 'agne@agne.no', '$2y$10$OG2VGysqShh3nfyrHq7QuOkBkwv/j6dKAuy31s.jq3OEtvIoa.A3a', ''),
-(6, 'Agne', 'Odegaard', 'agne240@me.com', '$2y$10$3ZHIG9vJriUolldUh1l4Y.KVIsuVebaIeTUcT5agbYy0GdYFn7TPO', '');
+INSERT INTO `users` (`id`, `name`, `surname`, `mail`, `password`, `rank`) VALUES
+(1, 'Agne', 'Odegaard', 'agne240@me.com', '$2y$10$3ZHIG9vJriUolldUh1l4Y.KVIsuVebaIeTUcT5agbYy0GdYFn7TPO', '2');
 
 --
 -- Indexes for dumped tables
 --
+
+CREATE TABLE `categories` (
+    `id` int(11) NOT NULL,
+    `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `categories` (`id`, `name`) VALUES
+(1, 'Nature'),
+(2, 'News');
+
+
+CREATE TABLE `posts_categories` (
+  `id` int(11) NOT NULL,
+  `post_id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`);
+  
+ALTER TABLE `posts_categories`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `pivot_cats` (`category_id`),
+  ADD KEY `pivot_posts` (`post_id`);
 
 --
 -- Indexes for table `images`
@@ -121,37 +140,39 @@ ALTER TABLE `posts`
 ALTER TABLE `ratings`
   ADD PRIMARY KEY (`id`);
   
+  
 ALTER TABLE `ratings`
   ADD CONSTRAINT ratings_user_post
-     UNIQUE (post_id, user_id) ;
+     UNIQUE (post_id, user_id);
 
 --
 -- Indexes for table `Users`
 --
-ALTER TABLE `Users`
+ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
---
--- AUTO_INCREMENT for dumped tables
---
 
---
--- AUTO_INCREMENT for table `images`
---
+
 ALTER TABLE `images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `posts`
---
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+
 ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
---
--- AUTO_INCREMENT for table `ratings`
---
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+
 ALTER TABLE `ratings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
---
--- AUTO_INCREMENT for table `Users`
---
-ALTER TABLE `Users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+  
+ALTER TABLE `categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;  
+  
+ALTER TABLE `posts_categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
+  
+
+  
+ALTER TABLE `posts_categories`
+  ADD CONSTRAINT `pivot_cats` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `pivot_posts` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;

@@ -30,6 +30,9 @@ $auth = new Auth();
 require_once('posts.php');
 $posts = new Posts();
 
+require_once('categories.php');
+$cats = new Categories();
+
 if(isset($_GET['logout'])){
     $auth->logout();
 }

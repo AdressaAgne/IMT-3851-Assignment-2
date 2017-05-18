@@ -1,6 +1,7 @@
 * {
     padding: 0px;
     margin: 0px;
+    box-sizing: border-box;
 }
 
 p, h1, h2, h3 {
@@ -18,11 +19,38 @@ main, .container {
     width: 960px;
 }
 
-input, textarea{
+.form-element{
+    width: 100%;
+}
+
+table{
+    width: 100%;
+    border-collapse: collapse;
+}
+tr {
+    border-bottom: 1px solid #cecece;
+}
+tr:first-of-type td{
+    border-top: 1px solid #cecece;
+}
+td {
+    padding: 5px;
+    border-left: 1px solid #cecece;
+}
+td:last-of-type{
+    border-right: 1px solid #cecece;
+}
+
+input, textarea, select{
     width: 100%;
     padding: 5px;
     margin: 10px;
 }
+
+td input{
+    margin: 0px;
+}
+
 .search{
     width: 200px;
 }

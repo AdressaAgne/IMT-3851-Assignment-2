@@ -42,6 +42,9 @@ class Database extends Config {
         
         $query->execute();
         
+        // IF the query is a insert query, return the new id
+        if(preg_match('/^(INSERT)/uim', $sql)) return $this->db->lastInsertId();
+        
         return $query;
     }
 }
