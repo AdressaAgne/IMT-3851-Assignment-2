@@ -43,7 +43,7 @@ include_once('Modules/head.php');
                     <td><?= $cat['articles'] ?></td>
                     <td><input type="submit" name="edit_cat" value="Edit Category"></td>
                     <td>
-                        <input type="submit" name="delete_post" value="delete">
+                        <input type="submit" name="delete_post" value="Delete">
                     </td>
                 </tr>
                 </form>
@@ -69,7 +69,7 @@ include_once('Modules/head.php');
                     <td>
                         <form method="post">
                             <input type="hidden" name="id" value="<?= $post['id'] ?>">
-                            <input type="submit" name="delete_post" value="delete">
+                            <input type="submit" name="delete_post" value="Delete">
                         </form>
                     </td>
                 </tr>
@@ -99,7 +99,7 @@ include_once('Modules/head.php');
                     <td>
                         <form method="post">
                             <input type="hidden" name="id" value="<?= $user['id'] ?>">
-                            <input type="submit" name="delete_user" value="delete">
+                            <input type="submit" name="delete_user" value="Delete">
                         </form>
                     </td>
                 </tr>

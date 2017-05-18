@@ -12,7 +12,7 @@ if(isset($_POST['delete_user'])){
 }
 // Delete a post
 if(isset($_POST['delete_post'])){
-    $post->delete($_POST['id']);
+    $posts->delete($_POST['id']);
 }
 
 // Edit a category

@@ -1,9 +1,6 @@
-# Missing:
 
-* Categories
-* Edit User / Edit password
-* Admin
-    * delete, edit and add users, categories, post
-* total posts in each category
+So this is a very simple little article/post application...
 
-change database settings in app/config.php then run setup.php.
+https://github.com/OrangeeWeb/IMT-3851-Assignment-2
+
+Change database settings in app/config.php then run setup.php.
